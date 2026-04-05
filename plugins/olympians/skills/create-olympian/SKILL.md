@@ -44,22 +44,22 @@ After showing examples, gather context about the current project:
 1. **Read CLAUDE.md** — if it exists in the working directory or parent directories, read it to understand conventions, tech stack, and patterns.
 2. **Scan project structure** — use Glob to understand the codebase layout (key directories, languages, frameworks).
 
-Based on what you find, **propose a custom agent** that would be useful for this specific project. For example:
-- Next.js + Stripe project → propose a `stripe-tester` or `checkout-flow-tester`
-- Django + Celery → propose a `task-queue-specialist`
-- React + GraphQL → propose a `graphql-schema-reviewer`
-- Monorepo with multiple services → propose a `integration-tester`
+Based on what you find, **propose 2-4 custom agents** that would be useful for this specific project. Tailor them to the actual tech stack, integrations, and patterns you discovered. For example:
+- Next.js + Stripe project → `stripe-tester`, `checkout-flow-tester`, `webhook-debugger`
+- Django + Celery → `task-queue-specialist`, `migration-reviewer`, `api-load-tester`
+- React + GraphQL → `graphql-schema-reviewer`, `component-tester`
+- Monorepo with multiple services → `integration-tester`, `service-contract-checker`
 
-Present your suggestion via **AskUserQuestion**:
+Present your suggestions via **AskUserQuestion** (use options, max 4):
 
-> "Based on your project, I suggest creating:"
+> "Based on your project, here are agents that could be useful:"
 >
-> **{suggested-name}** — {one-line description of what it would do}
->
-> 1. **Use this suggestion** — Pre-fill the wizard with this agent
-> 2. **Create something else** — I have my own idea
+> 1. **{name-1}** — {one-line description}
+> 2. **{name-2}** — {one-line description}
+> 3. **{name-3}** — {one-line description}
+> 4. **Create something else** — I have my own idea
 
-If the user picks **Use this suggestion**, pre-fill `{name}`, `{description}`, `{tools}`, `{model}`, `{isolation}`, and `{system_prompt}` with smart defaults based on the project. Skip Steps 1-6 and jump directly to Step 7 (Read Template) with all values pre-filled.
+If the user picks one of the suggestions, pre-fill `{name}`, `{description}`, `{tools}`, `{model}`, `{isolation}`, and `{system_prompt}` with smart defaults based on the project. Skip Steps 1-6 and jump directly to Step 7 (Read Template) with all values pre-filled.
 
 If the user picks **Create something else**, continue to Step 1 normally. Use the project context silently to give smarter defaults and suggestions in the following steps.
 
