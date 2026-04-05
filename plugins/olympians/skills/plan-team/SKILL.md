@@ -1,7 +1,6 @@
 ---
 name: olympians:plan-team
 description: Interactive wizard for planning Agent Teams — phases, roles, order. Suggests team composition from available olympians, allows edits and custom agent creation.
-disable-model-invocation: true
 ---
 
 # Plan Team — Interactive Wizard

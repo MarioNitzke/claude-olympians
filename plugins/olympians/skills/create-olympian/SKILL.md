@@ -1,7 +1,6 @@
 ---
 name: olympians:create-olympian
 description: Interactive wizard for creating a custom agent role (olympian). Generates a reference file from template.
-disable-model-invocation: true
 ---
 
 # Create Olympian — Custom Role Wizard
