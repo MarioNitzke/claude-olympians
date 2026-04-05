@@ -1,5 +1,5 @@
 ---
-name: olympians-spawn-team
+name: olympians:spawn-team
 description: Spawn an Agent Team — give it roles and a task, it handles the rest with best practices.
 disable-model-invocation: true
 ---
