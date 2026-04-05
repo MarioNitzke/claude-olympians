@@ -56,6 +56,34 @@ If a role file is not found, warn the user and continue with the roles that exis
 
 ---
 
+## Step 2b: Suggest Custom Agent
+
+After reading role references, silently scan the project context:
+1. Read `CLAUDE.md` if it exists (tech stack, conventions)
+2. Use Glob to identify key directories, languages, frameworks, config files (e.g. `docker-compose.yml`, `stripe.config`, `playwright.config`, `.github/workflows/`)
+
+Based on what you find, consider whether a **project-specific custom agent** would add value to the team — something the generic roles don't cover. Examples:
+- Stripe integration detected → suggest a `stripe-tester`
+- Playwright/Cypress config → suggest an `e2e-tester`
+- Complex CI pipeline → suggest a `ci-specialist`
+- i18n files → suggest a `localization-checker`
+- GraphQL schema → suggest a `graphql-specialist`
+
+If you have a good suggestion, use **AskUserQuestion**:
+
+> "Based on your project, I'd suggest adding a custom **{suggested-name}** agent — {one-line reason}. Want me to create it?"
+>
+> 1. **Yes, create it** — Launch the creation wizard
+> 2. **No, skip** — Continue with current roles
+
+If **Yes**: invoke `Skill("olympians:create-olympian")`. After creation, re-read the references directory (Step 2) to pick up the new role and add it to the team.
+
+If **No** or if no good suggestion exists: continue silently to Step 3.
+
+Do NOT suggest a custom agent if the user already has 4+ roles — keep it lean.
+
+---
+
 ## Step 3: Read Best Practices
 
 Read the best practices file:
