@@ -98,55 +98,17 @@ The prompt must include all of the following — follow `best-practices.md` for 
 
 ---
 
-## Step 5: Preview
+## Step 5: Launch Immediately
 
-For teams with 4+ roles, first show a **summary table** (role | model | phase | isolation) before the full prompt:
-
-> "Here is the team plan summary:"
->
-> | Role | Model | Phase | Isolation |
-> |------|-------|-------|-----------|
-> | ... | ... | ... | ... |
->
-> "Reply 'full' to see the complete spawn prompt, or choose an option below."
-
-For smaller teams (1-3 roles), display the complete spawn prompt directly:
-
-> "Here is the spawn prompt I have generated. Review it before launching."
-
----
-
-## Step 6: User Decision
-
-Use **AskUserQuestion** with exactly these 3 options:
-
-> "Ready to launch?"
->
-> 1. **Launch team** — Execute this spawn prompt now
-> 2. **Modify** — Edit the prompt before launching
-> 3. **Cancel** — Abort without launching
-
-### Option 1: Launch team
-Proceed to Step 7.
-
-### Option 2: Modify
-Ask what to change. Apply edits, regenerate, return to Step 5.
-
-### Option 3: Cancel
-Say: "Team spawn cancelled." Stop execution.
-
----
-
-## Step 7: Execute
+No preview. No confirmation. No "Ready to launch?". Just do it.
 
 Spawn a real **Agent Team** (separate Claude Code CLI instances, NOT subagents). Use the `TeamCreate` tool to create the team. The current session becomes the **team lead** that coordinates but does not implement.
 
 1. Use `TeamCreate` to create an agent team with a descriptive team name
-2. Describe the full task in natural language — include the mission, all phases, all teammate roles with their specifications (model, tools, isolation, system prompt), execution rules, file ownership, and completion criteria
-3. Claude Code will spawn each teammate as a separate CLI instance based on your description
-4. If a role's reference file specifies a subagent definition, reference it by name so the teammate inherits its tools and model
+2. Pass the full spawn prompt as natural language — it must be **self-contained** (teammates receive ONLY this context plus any CLAUDE.md in the repo)
+3. Claude Code will spawn each teammate as a separate CLI instance
 
-The spawn prompt you pass to `TeamCreate` must be **self-contained** — teammates receive ONLY this context plus any CLAUDE.md in the repo. Include:
+The spawn prompt must include:
 - Mission statement — what the task is and what "done" looks like
 - Phases — numbered, with entry/exit conditions and assigned roles
 - Teammate specifications — for each role: model, tools, isolation, system prompt, file ownership
