@@ -139,21 +139,19 @@ Say: "Team spawn cancelled." Stop execution.
 
 ## Step 7: Execute
 
-Check whether you are running inside plan mode (the user invoked this from `olympians:plan-team`).
+Spawn a real **Agent Team** (separate Claude Code CLI instances, NOT subagents). Use the `TeamCreate` tool to create the team. The current session becomes the **team lead** that coordinates but does not implement.
 
-### If called from plan mode (plan-team):
-Output the spawn prompt verbatim as natural language (NOT in a code block). The parent plan-team session will handle execution.
+1. Use `TeamCreate` to create an agent team with a descriptive team name
+2. Describe the full task in natural language — include the mission, all phases, all teammate roles with their specifications (model, tools, isolation, system prompt), execution rules, file ownership, and completion criteria
+3. Claude Code will spawn each teammate as a separate CLI instance based on your description
+4. If a role's reference file specifies a subagent definition, reference it by name so the teammate inherits its tools and model
 
-### If called directly by user (NOT plan mode):
-Actually spawn the team using the `Agent` tool. For each role in each phase (respecting phase order):
-
-1. Use the `Agent` tool to spawn each teammate as a subagent
-2. Set the `prompt` to that teammate's full spawn instructions (system prompt + task + file ownership + messaging rules)
-3. Set `model` based on the role's declared model (opus/sonnet/haiku)
-4. Set `isolation: "worktree"` if the role specifies worktree isolation
-5. Spawn teammates within the same phase in parallel (multiple Agent calls in one message)
-6. Wait for each phase to complete before starting the next phase
-7. The current session acts as **team lead** — coordinate, do not implement
+The spawn prompt you pass to `TeamCreate` must be **self-contained** — teammates receive ONLY this context plus any CLAUDE.md in the repo. Include:
+- Mission statement — what the task is and what "done" looks like
+- Phases — numbered, with entry/exit conditions and assigned roles
+- Teammate specifications — for each role: model, tools, isolation, system prompt, file ownership
+- Execution rules — phase gating, contract sharing, file ownership enforcement
+- Delegate mode — team lead coordinates only, does not implement
 
 After launching, say:
 

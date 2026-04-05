@@ -154,7 +154,7 @@ Then invoke spawn-team with this plan:
 Skill("olympians:spawn-team", planString)
 ```
 
-Where `planString` is the full plan formatted as structured text. Spawn-team will resolve the role references, apply best practices, show a preview, and let the user launch.
+Where `planString` is the full plan formatted as structured text. Spawn-team will resolve the role references, apply best practices, show a preview, and launch a real **Agent Team** (separate Claude Code CLI instances, NOT subagents).
 
 Do NOT display the plan yourself — spawn-team handles the preview and launch.
 
