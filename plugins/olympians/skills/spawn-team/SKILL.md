@@ -18,17 +18,18 @@ You get called two ways:
 ## Step 1: Parse Input
 
 Read `$ARGUMENTS`. Extract whatever is provided:
-- **Task** — what needs to be done
+- **Task** — what needs to be done (OPTIONAL — if not provided, just spawn the roles without a specific task)
 - **Roles** — which roles to spawn (by name)
 - **Phases** — if provided (typically from plan-team). If NOT provided, infer them automatically from the roles' declared phase preferences and contract-first ordering.
 - **Team Lead Instructions** — if provided (from plan-team's Step 5b)
 
-If `$ARGUMENTS` is completely empty, say:
+The only thing required is at least one role name. Task is optional — if the user just says `/olympians:spawn-team backend-developer frontend-developer`, spawn them without a task description.
+
+If `$ARGUMENTS` is completely empty (no roles, nothing), say:
 
 > Tell me what to spawn. Example:
+> `/olympians:spawn-team backend-developer frontend-developer`
 > `/olympians:spawn-team fix booking API with backend-developer and qa-reviewer`
->
-> For complex multi-phase planning, use `/olympians:plan-team` first.
 
 Stop and wait. Do NOT ask follow-up questions — let the user rephrase their request.
 
