@@ -9,7 +9,7 @@
       "name": "olympians",
       "description": "Pre-built agent team roles with interactive planning and spawning for Claude Code Agent Teams.",
       "version": "1.0.0",
-      "source": "./",
+      "source": "./plugins/olympians",
       "author": {
         "name": "MarioNitzke"
       }
