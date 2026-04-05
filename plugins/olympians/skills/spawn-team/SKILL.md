@@ -25,13 +25,27 @@ Read `$ARGUMENTS`. Extract whatever is provided:
 
 The only thing required is at least one role name. Task is optional — if the user just says `/olympians:spawn-team backend-developer frontend-developer`, spawn them without a task description.
 
-If `$ARGUMENTS` is completely empty (no roles, nothing), say:
+If `$ARGUMENTS` is completely empty (no roles, nothing):
 
-> Tell me what to spawn. Example:
-> `/olympians:spawn-team backend-developer frontend-developer`
-> `/olympians:spawn-team fix booking API with backend-developer and qa-reviewer`
+1. **Read CLAUDE.md** (if it exists) and **scan project structure** with Glob to understand the tech stack
+2. **Read all available roles** from `${CLAUDE_SKILL_DIR}/references/` (except `best-practices.md`)
+3. Based on the project, **suggest a team** via **AskUserQuestion** — pick 2-4 roles that make sense for this project and present them as options:
 
-Stop and wait. Do NOT ask follow-up questions — let the user rephrase their request.
+> "Based on your project, I suggest this team:"
+>
+> | Role | Why |
+> |------|-----|
+> | {role-1} | {reason} |
+> | {role-2} | {reason} |
+> | {role-3} | {reason} |
+>
+> 1. **Spawn this team** — Launch with these roles now
+> 2. **Pick different roles** — I'll choose my own
+> 3. **Create custom agent first** — Launch `/olympians:create-olympian`
+
+- **Option 1:** Continue with the suggested roles to Step 2
+- **Option 2:** Ask which roles they want, then continue to Step 2
+- **Option 3:** Invoke `Skill("olympians:create-olympian")`, then return here and ask again
 
 ---
 
@@ -53,34 +67,6 @@ From each file, extract (all reference files use English headers):
 - **Phase preference** — The declared phase (1st, 2nd, 3rd)
 
 If a role file is not found, warn the user and continue with the roles that exist. Suggest `/olympians:create-olympian` for the missing role.
-
----
-
-## Step 2b: Suggest Custom Agent
-
-After reading role references, silently scan the project context:
-1. Read `CLAUDE.md` if it exists (tech stack, conventions)
-2. Use Glob to identify key directories, languages, frameworks, config files (e.g. `docker-compose.yml`, `stripe.config`, `playwright.config`, `.github/workflows/`)
-
-Based on what you find, consider whether a **project-specific custom agent** would add value to the team — something the generic roles don't cover. Examples:
-- Stripe integration detected → suggest a `stripe-tester`
-- Playwright/Cypress config → suggest an `e2e-tester`
-- Complex CI pipeline → suggest a `ci-specialist`
-- i18n files → suggest a `localization-checker`
-- GraphQL schema → suggest a `graphql-specialist`
-
-If you have a good suggestion, use **AskUserQuestion**:
-
-> "Based on your project, I'd suggest adding a custom **{suggested-name}** agent — {one-line reason}. Want me to create it?"
->
-> 1. **Yes, create it** — Launch the creation wizard
-> 2. **No, skip** — Continue with current roles
-
-If **Yes**: invoke `Skill("olympians:create-olympian")`. After creation, re-read the references directory (Step 2) to pick up the new role and add it to the team.
-
-If **No** or if no good suggestion exists: continue silently to Step 3.
-
-Do NOT suggest a custom agent if the user already has 4+ roles — keep it lean.
 
 ---
 
