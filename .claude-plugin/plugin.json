@@ -1,0 +1,16 @@
+{
+  "name": "olympians",
+  "version": "1.0.0",
+  "description": "Pre-built agent team roles with interactive planning and spawning for Claude Code Agent Teams.",
+  "author": {
+    "name": "MarioNitzke",
+    "url": "https://github.com/MarioNitzke"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarioNitzke/olympians.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/MarioNitzke/olympians",
+  "keywords": ["agent-teams", "teammates", "orchestration", "multi-agent", "roles", "claude-code"]
+}
