@@ -37,19 +37,31 @@ If the directory is empty or doesn't exist, skip this step silently.
 
 ---
 
-## Step 0b: Understand the Project
+## Step 0b: Understand the Project and Suggest an Agent
 
 After showing examples, gather context about the current project:
 
 1. **Read CLAUDE.md** — if it exists in the working directory or parent directories, read it to understand conventions, tech stack, and patterns.
 2. **Scan project structure** — use Glob to understand the codebase layout (key directories, languages, frameworks).
-3. **Use this context silently** to make better suggestions for role capabilities and system prompts later. For example:
-   - ASP.NET Core project → suggest .NET/C# knowledge in backend roles
-   - React frontend → suggest React patterns
-   - `docker-compose.yml` present → suggest Docker-aware roles
-   - Stripe integration → suggest payment testing roles
 
-Do NOT dump this context to the user. Just use it to give smarter defaults and suggestions in the following steps.
+Based on what you find, **propose a custom agent** that would be useful for this specific project. For example:
+- Next.js + Stripe project → propose a `stripe-tester` or `checkout-flow-tester`
+- Django + Celery → propose a `task-queue-specialist`
+- React + GraphQL → propose a `graphql-schema-reviewer`
+- Monorepo with multiple services → propose a `integration-tester`
+
+Present your suggestion via **AskUserQuestion**:
+
+> "Based on your project, I suggest creating:"
+>
+> **{suggested-name}** — {one-line description of what it would do}
+>
+> 1. **Use this suggestion** — Pre-fill the wizard with this agent
+> 2. **Create something else** — I have my own idea
+
+If the user picks **Use this suggestion**, pre-fill `{name}`, `{description}`, `{tools}`, `{model}`, `{isolation}`, and `{system_prompt}` with smart defaults based on the project. Skip Steps 1-6 and jump directly to Step 7 (Read Template) with all values pre-filled.
+
+If the user picks **Create something else**, continue to Step 1 normally. Use the project context silently to give smarter defaults and suggestions in the following steps.
 
 ---
 
