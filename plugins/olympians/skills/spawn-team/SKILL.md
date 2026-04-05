@@ -139,14 +139,23 @@ Say: "Team spawn cancelled." Stop execution.
 
 ## Step 7: Execute
 
-Copy the finalized spawn prompt into the conversation as your response. The user's Claude Code
-session will interpret this as team spawn instructions.
+Check whether you are running inside plan mode (the user invoked this from `olympians:plan-team`).
 
-1. Output the spawn prompt verbatim as natural language (NOT in a code block — Claude must interpret it as instructions, not display it as text)
-2. The prompt must be self-contained — teammates receive ONLY this context plus any CLAUDE.md in the repo
-3. Include all teammate specifications, phases, execution rules, and delegate mode instructions in the output
+### If called from plan mode (plan-team):
+Output the spawn prompt verbatim as natural language (NOT in a code block). The parent plan-team session will handle execution.
 
-After outputting the spawn prompt, say:
+### If called directly by user (NOT plan mode):
+Actually spawn the team using the `Agent` tool. For each role in each phase (respecting phase order):
+
+1. Use the `Agent` tool to spawn each teammate as a subagent
+2. Set the `prompt` to that teammate's full spawn instructions (system prompt + task + file ownership + messaging rules)
+3. Set `model` based on the role's declared model (opus/sonnet/haiku)
+4. Set `isolation: "worktree"` if the role specifies worktree isolation
+5. Spawn teammates within the same phase in parallel (multiple Agent calls in one message)
+6. Wait for each phase to complete before starting the next phase
+7. The current session acts as **team lead** — coordinate, do not implement
+
+After launching, say:
 
 > "Team launched. Monitor progress with Shift+Down (cycle teammates) or Ctrl+T (task list)."
 
