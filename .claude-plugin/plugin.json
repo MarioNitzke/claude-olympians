@@ -6,10 +6,7 @@
     "name": "MarioNitzke",
     "url": "https://github.com/MarioNitzke"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MarioNitzke/claude-olympians.git"
-  },
+  "repository": "https://github.com/MarioNitzke/claude-olympians",
   "license": "MIT",
   "homepage": "https://github.com/MarioNitzke/claude-olympians",
   "keywords": ["agent-teams", "teammates", "orchestration", "multi-agent", "roles", "claude-code"]
