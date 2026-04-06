@@ -72,7 +72,7 @@ Use **AskUserQuestion**:
 
 Validate the name:
 - Must be kebab-case (lowercase, hyphens only)
-- Must not conflict with an existing role in `${CLAUDE_SKILL_DIR}/../spawn-team/references/`
+- Must not conflict with an existing role in `.claude/olympians/` or `${CLAUDE_SKILL_DIR}/../spawn-team/references/`
 - If invalid, explain and ask again
 
 Store as `{name}`.
@@ -198,12 +198,12 @@ Use **AskUserQuestion** with options:
 
 > "Where should I save this olympian?"
 >
-> 1. **Save to team references** — Save to `spawn-team/references/{name}.md` (available for all team plans)
-> 2. **Save to current directory** — Save as `{name}.md` in the current working directory
+> 1. **Save to project** — Save to `.claude/olympians/{name}.md` (available for this project's teams, overrides plugin defaults)
+> 2. **Save to plugin references** — Save to `spawn-team/references/{name}.md` (available globally for all projects)
 > 3. **Edit** — Go back and modify something before saving
 
-- **Option 1:** Write to `${CLAUDE_SKILL_DIR}/../spawn-team/references/{name}.md`
-- **Option 2:** Write as `{name}.md` in the current working directory
+- **Option 1:** Create `.claude/olympians/` directory if it doesn't exist, then write to `.claude/olympians/{name}.md`
+- **Option 2:** Write to `${CLAUDE_SKILL_DIR}/../spawn-team/references/{name}.md`
 - **Option 3:** Ask which part to edit, apply changes, regenerate, return to Step 9
 
 ---
@@ -230,4 +230,4 @@ After saving, display:
 
 - **Called by:** `olympians:plan-team` (when user wants a custom role)
 - **Template:** `${CLAUDE_SKILL_DIR}/templates/custom-olympian.md`
-- **Output:** Saves to `spawn-team/references/` or CWD
+- **Output:** Saves to `.claude/olympians/` (project) or `spawn-team/references/` (plugin)

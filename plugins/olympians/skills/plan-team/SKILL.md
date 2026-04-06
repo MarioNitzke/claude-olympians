@@ -45,11 +45,10 @@ Present your suggestion and use **AskUserQuestion** to confirm:
 
 ## Step 3: Read Available Roles
 
-Read **ALL** `.md` files from:
+Read **ALL** `.md` files from both locations (merge, project wins on name conflicts):
 
-```
-${CLAUDE_SKILL_DIR}/../spawn-team/references/
-```
+1. **Project roles:** `.claude/olympians/*.md` in the current working directory
+2. **Plugin roles:** `${CLAUDE_SKILL_DIR}/../spawn-team/references/`
 
 **EXCEPT** `best-practices.md` — skip that file entirely.
 
@@ -113,7 +112,7 @@ Invoke the skill:
 ```
 Skill("olympians:create-olympian")
 ```
-After the custom olympian is created, re-read the references directory (Step 3) to pick up the new role.
+After the custom olympian is created, re-read both role locations (Step 3) to pick up the new role.
 Then ask the user which phase to assign it to, update the table, and return to Step 5.
 
 ### Option 3: Both
@@ -170,5 +169,5 @@ Do NOT display the plan yourself — spawn-team handles the preview and launch.
 ## Integration
 
 - **Invokes:** `olympians:create-olympian` (for custom roles)
-- **References:** `${CLAUDE_SKILL_DIR}/../spawn-team/references/*.md`
+- **References:** `.claude/olympians/*.md` (project roles, priority) + `${CLAUDE_SKILL_DIR}/../spawn-team/references/*.md` (plugin roles)
 - **Output goes to:** `olympians:spawn-team`

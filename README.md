@@ -46,8 +46,13 @@ Enable Agent Teams in `~/.claude.json` (global) or `.claude/settings.json` (proj
 { "env": { "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1" } }
 ```
 
-Example roles are opt-in — they must be copied into the active references directory before spawn-team can use them:
+Example roles are opt-in — copy them to your project or to the plugin references:
 ```bash
+# Project-local (this project only, overrides plugin defaults)
+mkdir -p .claude/olympians
+cp examples/*.md .claude/olympians/
+
+# Global (all projects)
 cp examples/*.md skills/spawn-team/references/
 ```
 
@@ -161,10 +166,24 @@ The generic roles are a starting point. **Custom roles tailored to YOUR project 
 Or copy an example and modify it:
 
 ```bash
+# Save to project (recommended)
+mkdir -p .claude/olympians
+cp examples/stripe-tester.md .claude/olympians/my-tester.md
+
+# Save to plugin (global)
 cp examples/stripe-tester.md skills/spawn-team/references/my-tester.md
 ```
 
 Every role is a markdown file with: name, tools, model, isolation, system prompt, spawn example. See any file in `references/` or `examples/` for the format.
+
+### Role Resolution Order
+
+When spawning a team, roles are resolved in this order (first match wins):
+
+1. **`.claude/olympians/`** — project-specific roles (can override plugin defaults)
+2. **`skills/spawn-team/references/`** — plugin's built-in generic roles
+
+This means you can customize any built-in role per project by placing a file with the same name in `.claude/olympians/`.
 
 ---
 

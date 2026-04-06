@@ -27,7 +27,9 @@ The only thing required is at least one role name. Task is optional — if the u
 If `$ARGUMENTS` is completely empty (no roles, nothing):
 
 1. **Read CLAUDE.md** (if it exists) and **scan project structure** with Glob to understand the tech stack
-2. **Read all available roles** from `${CLAUDE_SKILL_DIR}/references/` (except `best-practices.md`)
+2. **Read all available roles** from both locations (merge, project wins on name conflicts):
+   - **Project roles:** `.claude/olympians/*.md` in the current working directory
+   - **Plugin roles:** `${CLAUDE_SKILL_DIR}/references/` (except `best-practices.md`)
 3. Based on the project, **suggest a team** via **AskUserQuestion** — pick 2-4 roles that make sense for this project and present them as options:
 
 > "Based on your project, I suggest this team:"
@@ -50,11 +52,12 @@ If `$ARGUMENTS` is completely empty (no roles, nothing):
 
 ## Step 2: Read Role References
 
-For each role mentioned, read its reference file from:
+For each role mentioned, search for its reference file in this order (first match wins):
 
-```
-${CLAUDE_SKILL_DIR}/references/{role-name}.md
-```
+1. **Project roles:** `.claude/olympians/{role-name}.md` in the current working directory
+2. **Plugin roles:** `${CLAUDE_SKILL_DIR}/references/{role-name}.md`
+
+This allows project-specific roles to override plugin defaults.
 
 From each file, extract (all reference files use English headers):
 - **Name** — The `# Title` heading
@@ -147,4 +150,4 @@ After launching, say:
 ## Integration
 
 - **Called by:** `olympians:plan-team` (with structured plan) or user directly (with quick description)
-- **References:** `${CLAUDE_SKILL_DIR}/references/*.md` (role definitions + best practices)
+- **References:** `.claude/olympians/*.md` (project roles, priority) + `${CLAUDE_SKILL_DIR}/references/*.md` (plugin roles + best practices)
