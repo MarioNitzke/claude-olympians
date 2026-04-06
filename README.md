@@ -24,8 +24,8 @@ Three skills:
 
 ## Prerequisites
 
-- **Claude Code** v1.0+ with Agent Teams support
-- **tmux** (optional) — for split-pane visual monitoring of all teammates simultaneously
+- **Claude Code** 
+- **tmux or iterm2** (optional) — for split-pane visual monitoring of all teammates simultaneously
 - Example roles may require additional tools (Stripe CLI, agent-browser, Docker) — see each role's `Requires` field
 
 ---
@@ -90,7 +90,7 @@ It reads role references, infers phases, applies best practices, shows preview, 
 
 ![Plan Team Workflow](docs/plan-team-workflow.png)
 
-You're tackling a big problem and want to plan properly:
+You're tackling a big problem and want to plan properly (plan mode on):
 
 ```
 /olympians:plan-team
